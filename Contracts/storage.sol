@@ -2,13 +2,15 @@
 pragma solidity >=0.8.7 <0.9.0;
 
 contract Storage {
-     uint32 public FavNumber;
-     person public Barath = person({name: "Barath Kanna",age: 22});
+     uint32 FavNumber;
+     Person public Barath = Person({name: "Barath Kanna",age: 22});
 
- struct person {
+ struct Person {
      string name;
      uint32 age;
  }
+     mapping(string => uint32) public nameToAge;
+     Person[] public people;
  
  function store(uint32 number) public {
     FavNumber = number;
@@ -16,6 +18,11 @@ contract Storage {
 //  view and pure functions don't spend gas when executed
  function retrieve() public view returns(uint32) {
      return FavNumber;
+ }
+ function addPerson(string memory _name, uint32 _age) public {
+    //  Person memory newPerson = Person({_name, _age});
+     people.push(Person({name: _name ,age: _age}));
+     nameToAge[_name] = _age;
  }
 }
 
